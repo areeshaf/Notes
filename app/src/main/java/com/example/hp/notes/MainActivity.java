@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
 
         if(item.getItemId()== R.id.addnote) {
+            Intent intent=new Intent(getApplicationContext(),NotesEditorActivity.class);
+            startActivity(intent);
+
             return true;
         }else {
             return false;
