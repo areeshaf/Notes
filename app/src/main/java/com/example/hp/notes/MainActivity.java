@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     static ArrayList<String> notes;
     static ArrayAdapter<String> arrayAdapter;
 
+    //Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -32,8 +33,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
 
-        
-    }
+        if(item.getItemId()== R.id.addnote) {
+            return true;
+        }else {
+            return false;
+        }
+    }//Menu ended
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
