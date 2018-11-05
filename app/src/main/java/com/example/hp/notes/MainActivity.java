@@ -1,7 +1,9 @@
 package com.example.hp.notes;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,11 +17,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity {
 
-    static ArrayList<String> notes;
+    static ArrayList<String> notes=new ArrayList<>();
     static ArrayAdapter<String> arrayAdapter;
+    SharedPreferences sharedPreferences;
 
     //Menu
     @Override
@@ -50,9 +54,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+       sharedPreferences =getApplicationContext().getSharedPreferences("com.example.hp.notes", Context.MODE_PRIVATE);
+       HashSet<String> set=(HashSet<String>)sharedPreferences.getStringSet("notes",null) ;
+
         ListView listView=findViewById(R.id.listView);
-        notes=new ArrayList<>();
-        notes.add("Example");
+        if (set==null)
+        {
+            notes.add("Example");
+
+        }else {
+            notes=new ArrayList(set);
+        }
         arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,notes);
 
         listView.setAdapter(arrayAdapter);
@@ -79,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 notes.remove(itemToDelete);
                                 arrayAdapter.notifyDataSetChanged();
+
+                                HashSet<String> set=new HashSet<>(MainActivity.notes);
+                                sharedPreferences.edit().putStringSet("notes",set).apply();
                             }
                         })
                         .setNegativeButton("No",null)
