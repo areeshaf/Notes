@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<String> notes;
+    static ArrayList<String> notes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Toast.makeText(MainActivity.this, notes.get(i), Toast.LENGTH_SHORT).show();
-              //  Intent intent=new Intent(getApplicationContext(),)
+                Intent intent=new Intent(getApplicationContext(),NotesEditorActivity.class);
+                intent.putExtra("noteId",i);
+                startActivity(intent);
             }
         });
 
